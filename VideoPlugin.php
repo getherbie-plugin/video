@@ -27,19 +27,34 @@ class VideoPlugin extends Herbie\Plugin
     private static $youtubeInstances = 0;
 
     /**
-     * @var Twig_Environment
+     * @return array
      */
-    private $twig;
-
-    public function onTwigInitialized(Herbie\Event $event)
+    public function getSubscribedEvents()
     {
-        $this->twig = $event['twig'];
-        $this->twig->addFunction(
+        $events = [];
+        if ((bool)$this->config('plugins.config.video.twig', false)) {
+            $events[] = 'onTwigInitialized';
+        }
+        if ((bool)$this->config('plugins.config.video.shortcode', true)) {
+            $events[] = 'onShortcodeInitialized';
+        }
+        return $events;
+    }
+
+    public function onTwigInitialized($twig)
+    {
+        $twig->addFunction(
             new Twig_SimpleFunction('video_vimeo', [$this, 'vimeo'], ['is_safe' => ['html']])
         );
-        $this->twig->addFunction(
+        $twig->addFunction(
             new Twig_SimpleFunction('video_youtube', [$this, 'youtube'], ['is_safe' => ['html']])
         );
+    }
+
+    public function onShortcodeInitialized($shortcode)
+    {
+        $shortcode->add('video_vimeo', [$this, 'vimeoShortcode']);
+        $shortcode->add('video_youtube', [$this, 'youtubeShortcode']);
     }
 
     /**
@@ -57,7 +72,7 @@ class VideoPlugin extends Herbie\Plugin
             'plugins.config.video.template.vimeo',
             '@plugin/video/templates/vimeo.twig'
         );
-        return $this->twig->render($template, [
+        return $this->render($template, [
             'src' => sprintf('//player.vimeo.com/video/%s', $id),
             'width' => $width,
             'height' => $height,
@@ -82,7 +97,7 @@ class VideoPlugin extends Herbie\Plugin
             'plugins.config.video.template.youtube',
             '@plugin/video/templates/youtube.twig'
         );
-        return $this->twig->render($template, [
+        return $this->render($template, [
             'src' => sprintf('//www.youtube.com/embed/%s?rel=0', $id),
             'width' => $width,
             'height' => $height,
@@ -90,6 +105,28 @@ class VideoPlugin extends Herbie\Plugin
             'class' => $responsive ? 'video-youtube-responsive' : '',
             'instances' => self::$youtubeInstances
         ]);
+    }
+
+    public function youtubeShortcode($options)
+    {
+        $this->initOptions([
+            'id' => '',
+            'width' => 480,
+            'height' => 320,
+            'responsive' => 1
+        ], $options);
+        return call_user_func_array([$this, 'youtube'], $options);
+    }
+
+    public function vimeoShortcode($options)
+    {
+        $this->initOptions([
+            'id' => '',
+            'width' => 480,
+            'height' => 320,
+            'responsive' => 1
+        ], $options);
+        return call_user_func_array([$this, 'vimeo'], $options);
     }
 
 }
