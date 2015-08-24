@@ -100,7 +100,7 @@ class VideoPlugin
     public static function youtubeShortcode($options)
     {
         $options = array_merge([
-            'id' => '',
+            'id' => empty($options[0]) ? '' : $options[0],
             'width' => 480,
             'height' => 320,
             'responsive' => 1
@@ -111,7 +111,7 @@ class VideoPlugin
     public static function vimeoShortcode($options)
     {
         $options = array_merge([
-            'id' => '',
+            'id' => empty($options[0]) ? '' : $options[0],
             'width' => 480,
             'height' => 320,
             'responsive' => 1
