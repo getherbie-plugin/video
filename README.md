@@ -1,13 +1,11 @@
-Herbie Video Plugin
-=====================
+# Herbie Video Plugin
 
 `Video` ist ein [Herbie](http://github.com/getherbie/herbie) Plugin, mit dem du Videos von 
 [YouTube](http://www.youtube.com) und [Vimeo](https://vimeo.com) in deine Website einbettest. Die eingebetteten
 Videos sind responsive und passen sich der Grösse des Browserfensters automatisch an.
 
 
-Installation
--------------
+## Installation
 
 Das Plugin installierst du via Composer.
 
@@ -59,8 +57,7 @@ Alternativ kannst du die Funktionen auch mit benannten Argumenten aufrufen.
     {{ video_vimeo(id="30459532", width=480, height=320, responsive=1) }}
 
 
-Parameter
----------
+## Parameter
 
 Name        | Beschreibung                          | Typ       | Default
 :---------- | :------------------------------------ | :-------- | :------
@@ -70,8 +67,7 @@ height      | Die Höhe des Videos in Pixel          | int       | 320
 responsive  | Definiert ob das Video responsiv ist  | bool      | true
 
 
-Demo
-----
+## Demo
 
 <http://www.getherbie.org/blog/2014/05/09-responsive-youtube-videos>  
 <http://www.getherbie.org/blog/2014/05/21-vimeo-responsive-videos>
