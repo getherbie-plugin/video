@@ -69,5 +69,5 @@ responsive  | Definiert ob das Video responsiv ist  | bool      | true
 
 ## Demo
 
-<http://www.getherbie.org/blog/2014/05/09-responsive-youtube-videos>  
-<http://www.getherbie.org/blog/2014/05/21-vimeo-responsive-videos>
+<https://www.getherbie.org/blog/2014/05/09-responsive-youtube-videos>  
+<https://www.getherbie.org/blog/2014/05/21-vimeo-responsive-videos>
